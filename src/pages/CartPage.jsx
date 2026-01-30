@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCart } from "../features/cart/cartSlice";
 import PageLayout from "../layout/PageLayout";
@@ -7,7 +7,8 @@ import { toggleSelectAll } from "../features/cart/cartSlice";
 
 export default function CartPage() {
   const dispatch = useDispatch();
-    const items = useSelector(state => state.cart.items);
+  const hasFetched = useRef(false);
+  const items = useSelector(state => state.cart.items);
 
   useEffect(() => {
     if (items.length > 0) {
@@ -16,6 +17,8 @@ export default function CartPage() {
   }, [dispatch, items.length]);
 
   useEffect(() => {
+    if (hasFetched.current) return;
+    hasFetched.current = true;
     dispatch(fetchCart());
   }, [dispatch]);
 

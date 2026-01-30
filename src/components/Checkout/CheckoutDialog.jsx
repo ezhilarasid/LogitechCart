@@ -8,13 +8,17 @@ import {
     Button,
     Stack,
     Avatar,
-    LinearProgress
+    LinearProgress,
+    IconButton,
+    DialogTitle
 } from "@mui/material";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import { removeOrderedItems } from "../../features/cart/cartSlice";
 import AddressSelector from "./AddressSelector";
 import PaymentMethodSelector from "./PaymentMethodSelector";
 import OrderSuccess from "./OrderSuccess";
+import CloseIcon from "@mui/icons-material/Close";
+
 const addresses = [
     {
         id: 1,
@@ -69,7 +73,28 @@ export default function CheckoutDialog({ open, onClose, checkout }) {
 
     if (!checkout?.items?.length && !showSuccess) return null;
     return (
-        <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
+        <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth scroll={showSuccess ? "body" : "paper"} PaperProps={{
+            sx: {
+                overflow: showSuccess ? "hidden" : "auto",
+            },
+        }}>
+            {!showSuccess && (<DialogTitle
+                sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    fontWeight: 700,
+                }}
+            >
+                <Typography fontSize={26} fontWeight={700}>
+                    Product Checkout
+                </Typography>
+
+                <IconButton onClick={onClose}>
+                    <CloseIcon />
+                </IconButton>
+            </DialogTitle>)}
+
             {
                 showSuccess ? (
                     <OrderSuccess

@@ -7,12 +7,14 @@ export default function PageLayout({ children }) {
     <Box
       sx={{
         minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
         background:
           "linear-gradient(180deg, #F6F9FC 0%, #EEF2F7 100%)",
       }}
     >
       <Header />
-      <Container maxWidth="lg" sx={{ py: 4 }}>
+      <Container maxWidth="lg" sx={{ py: 4, flex: 1, }}>
         {children}
       </Container>
       <Footer />
